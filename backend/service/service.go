@@ -62,3 +62,40 @@ func GetProduct(id int) (dictionary.Product, error) {
 	err := row.Scan(&product.ID, &product.Name, &product.ProductPrice, &product.ImageURL, &product.ShopName)
 	return product, err
 }
+
+// func GetProducts() ([]dictionary.Product, error) {
+
+// 	// // you can connect and
+// 	// // get current database connection
+// 	db := database.GetDB()
+// 	query := `
+// 	SELECT product_id, product_name, product_price, product_image, shop_name
+// 	FROM products
+// 	`
+// 	// defer db.Close()
+// 	// // actual query process
+// 	rows, _ := db.Query(query)
+
+// 	defer rows.Close()
+
+// 	// An album slice to hold data from returned rows.
+// 	var product []dictionary.Product
+
+// 	// Loop through rows, using Scan to assign column data to struct fields.
+// 	for rows.Next() {
+// 		var alb Album
+// 		if err := rows.Scan(&alb.ID, &alb.Title, &alb.Artist,
+// 			&alb.Price, &alb.Quantity); err != nil {
+// 			return albums, err
+// 		}
+// 		albums = append(albums, album)
+// 	}
+// 	if err = rows.Err(); err != nil {
+// 		return albums, err
+// 	}
+
+// 	product := dictionary.Product{}
+// 	// // read query result, and assign to variable(s)
+// 	err := row.Scan(&product.ID, &product.Name, &product.ProductPrice, &product.ImageURL, &product.ShopName)
+// 	return product, err
+// }

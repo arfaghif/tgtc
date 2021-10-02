@@ -36,10 +36,49 @@ func (s *SchemaWrapper) Init() error {
 					},
 					Resolve: s.productResolver.GetProduct(),
 				},
+				"Products": &graphql.Field{
+					Type:        graphql.NewList(ProductType),
+					Description: "Get product by ID",
+					Args: graphql.FieldConfigArgument{
+						"product_id": &graphql.ArgumentConfig{
+							Type: graphql.Int,
+						},
+					},
+					Resolve: s.productResolver.GetProduct(),
+				},
 			},
 		}),
+
 		// uncomment this and add objects for mutation
 		// Mutation: graphql.NewObject(graphql.ObjectConfig{}),
+		Mutation: graphql.NewObject(graphql.ObjectConfig{
+			Name:        "ProductCreate",
+			Description: "Create a new product",
+			Fields: graphql.Fields{
+				"CreateProducts": &graphql.Field{
+					Type:        ProductType,
+					Description: "Product Create",
+					Args: graphql.FieldConfigArgument{
+						"product_id": &graphql.ArgumentConfig{
+							Type: graphql.Int,
+						},
+						"name": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
+						"product_price": &graphql.ArgumentConfig{
+							Type: graphql.Int,
+						},
+						"image_url": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
+						"shop_name": &graphql.ArgumentConfig{
+							Type: graphql.String,
+						},
+					},
+					Resolve: s.productResolver.GetProduct(),
+				},
+			},
+		}),
 	})
 
 	if err != nil {
