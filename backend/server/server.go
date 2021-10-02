@@ -27,6 +27,7 @@ func Serve(cfg Config, router *mux.Router) {
 		ReadTimeout:  cfg.ReadTimeout,
 	}
 
+	
 	go func() {
 		if err := srv.ListenAndServe(); err != nil {
 			log.Fatal("[Server] unable to listen and serve, err: " + err.Error())
@@ -43,3 +44,4 @@ func Serve(cfg Config, router *mux.Router) {
 		log.Println("[Server] error on shutting down HTTP Server, err: ", err.Error())
 	}
 }
+

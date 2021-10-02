@@ -10,6 +10,7 @@ import (
 
 	"github.com/radityaqb/tgtc/backend/dictionary"
 	"github.com/radityaqb/tgtc/backend/domain/product"
+	"github.com/radityaqb/tgtc/backend/service"
 )
 
 func Ping(w http.ResponseWriter, r *http.Request) {
@@ -25,7 +26,12 @@ func AddProduct(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	p = product.AddProduct(context.Background(), p)
+	if err := service.AddProduct(p); err != nil {
+		log.Println(err.Error())
+		http.Error(w, "unprocessibility entity", 422)
+		return
+	}
+
 	fmt.Fprintf(w, fmt.Sprint("success, id product : ", p.ID))
 }
 
@@ -37,9 +43,10 @@ func GetProduct(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 
-	p, err := product.GetProduct(context.Background(), idInt64)
+	p, err := service.GetProduct(int(idInt64))
 	if err != nil {
 		// log.Fatal(err)
+		log.Println(err.Error())
 		fmt.Fprintf(w, err.Error())
 	}
 
